@@ -7,7 +7,7 @@ import {
   Terminal, Layout, Cpu, Boxes,
   ChevronRight, Globe, Lock, Rocket,
   Sparkles, Bot, Microscope, Radio,
-  Moon, Sun, Coffee, Ghost
+  Moon, Sun, Coffee, Ghost, Brain
 } from 'lucide-react';
 
 const THEMES = [
@@ -27,10 +27,6 @@ const CORE_SYSTEMS = [
   { name: 'Library Hub', url: 'http://localhost:3010', icon: Boxes, color: '#ffffff', desc: 'Component & Plugin Registry' },
 ];
 
-function Brain({ size, className }: { size: number, className: string }) {
-  return <Bot size={size} className={className} />;
-}
-
 export default function Home() {
   const [mounted, setMounted] = React.useState(false);
 
@@ -41,111 +37,139 @@ export default function Home() {
   if (!mounted) return null;
 
   return (
-    <main className="min-h-screen relative p-10 flex flex-col items-center">
+    <main className="min-h-screen relative p-8 md:p-14 lg:p-20 flex flex-col items-center">
       <div className="hub-bg" />
       <div className="hub-grid" />
       <div className="scanline" />
 
-      {/* Hero Section */}
-      <header className="w-full max-w-7xl flex flex-col items-center text-center mt-20 mb-32">
+      {/* Header Section */}
+      <header className="w-full max-w-7xl flex flex-col items-center text-center mt-10 mb-24 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-4 glass-card rounded-3xl mb-12 flex items-center gap-4 px-8 border-cyan-500/20"
+          className="px-6 py-2 glass-card rounded-full mb-10 flex items-center gap-3 border-white/10"
         >
-          <Ghost className="text-cyan-400 animate-pulse" size={24} />
-          <span className="text-[10px] font-black uppercase tracking-[0.5em] text-cyan-500/60">Ghost_Ecosystem_Authorized_Access</span>
+          <div className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+          <span className="text-[9px] font-black uppercase tracking-[0.4em] text-cyan-400">GHOST_ECOSYSTEM_ACTIVE</span>
         </motion.div>
 
-        <motion.h1
-          initial={{ opacity: 0, scale: 0.9 }}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="text-8xl font-black italic tracking-tighter animated-gradient-text uppercase mb-6"
+          transition={{ duration: 0.8 }}
+          className="relative"
         >
-          Central_Hub
-        </motion.h1>
+          <h1 className="text-7xl md:text-9xl font-black italic tracking-tighter animated-gradient-text uppercase">
+            CENTRAL_HUB
+          </h1>
+          <div className="absolute -inset-2 blur-3xl bg-cyan-500/10 -z-10" />
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0 }}
-          animate={{ opacity: 0.6 }}
-          className="text-sm font-light max-w-2xl tracking-[0.2em] uppercase"
+          animate={{ opacity: 0.4 }}
+          className="text-[10px] md:text-xs font-bold mt-6 tracking-[0.5em] uppercase text-white"
         >
-          Unified Control Interface for Distributed Intelligence Nodes
+          Neural Link Authorized // Distributed Node Control
         </motion.p>
       </header>
 
-      {/* Dashboard Grid */}
-      <section className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+      {/* Node Grid */}
+      <section className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-32 relative z-10">
         {THEMES.map((theme, i) => (
           <motion.a
             key={theme.id}
             href={`http://localhost:${theme.port}`}
             target="_blank"
-            whileHover={{ scale: 1.02, y: -5 }}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className="group glass-card p-8 rounded-[40px] flex flex-col gap-6 relative overflow-hidden"
+            transition={{ delay: i * 0.08, duration: 0.5 }}
+            className="group glass-card p-10 rounded-[48px] flex flex-col gap-6 relative overflow-hidden border-white/5 hover:border-white/20 active:scale-95"
           >
-            <div className={`p-4 rounded-2xl bg-zinc-900 w-fit text-zinc-400 group-hover:text-white transition-colors`} style={{ color: theme.color }}>
-              <theme.icon size={28} />
+            {/* Glow effect in background */}
+            <div
+              className="absolute -top-10 -right-10 w-32 h-32 blur-[60px] opacity-0 group-hover:opacity-20 transition-opacity"
+              style={{ backgroundColor: theme.color }}
+            />
+
+            <div
+              className="p-5 rounded-2xl bg-white/5 w-fit transition-all group-hover:bg-white/10 group-hover:scale-110"
+              style={{ color: theme.color, boxShadow: `0 0 20px ${theme.color}20` }}
+            >
+              <theme.icon size={32} />
             </div>
 
-            <div>
-              <div className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest mb-1">Node_0{theme.id}</div>
-              <h3 className="text-2xl font-black italic uppercase tracking-tighter group-hover:text-cyan-400 transition-colors">
+            <div className="flex-1">
+              <div className="text-[9px] font-black text-white/30 uppercase tracking-[0.2em] mb-2">Node_0{theme.id}</div>
+              <h3 className="text-3xl font-black italic uppercase tracking-tighter group-hover:text-white transition-colors">
                 {theme.name}
               </h3>
-              <p className="text-[10px] text-zinc-500 mt-2 font-medium leading-relaxed">
+              <p className="text-[11px] text-white/40 group-hover:text-white/70 mt-3 font-medium leading-relaxed transition-colors">
                 {theme.desc}
               </p>
             </div>
 
-            <div className="mt-8 flex justify-between items-center text-zinc-600 group-hover:text-cyan-500 transition-colors">
-              <span className="text-[9px] font-black uppercase tracking-widest">Local_Port: {theme.port}</span>
-              <ChevronRight size={18} />
-            </div>
-
-            {/* Background Accent */}
-            <div className="absolute -bottom-10 -right-10 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity">
-              <theme.icon size={180} />
+            <div className="mt-8 flex justify-between items-center group-hover:translate-x-1 transition-transform">
+              <div className="flex flex-col">
+                <span className="text-[8px] font-black uppercase tracking-widest text-white/20">Access_Port</span>
+                <span className="text-[12px] font-black text-white/80" style={{ color: `${theme.color}cc` }}>{theme.port}</span>
+              </div>
+              <ChevronRight size={24} className="text-white/20 group-hover:text-white transition-colors" />
             </div>
           </motion.a>
         ))}
       </section>
 
-      {/* Core Systems Section */}
-      <section className="w-full max-w-7xl pt-20 border-t border-white/5">
-        <div className="flex flex-col gap-2 mb-10">
-          <span className="text-xs font-black uppercase tracking-[0.3em] text-cyan-500">Core_Infrastructure</span>
-          <h2 className="text-3xl font-black italic uppercase tracking-tighter">System_Backbone</h2>
+      {/* Backbone / Core Systems */}
+      <section className="w-full max-w-7xl pt-24 border-t border-white/5 relative z-10">
+        <div className="flex items-center justify-between mb-16">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-6 bg-cyan-400" />
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-400">Backbone_Infrastructure</span>
+            </div>
+            <h2 className="text-4xl font-black italic uppercase tracking-tighter text-white">Neural_System_Registry</h2>
+          </div>
+          <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="opacity-10 hidden md:block">
+            <Boxes size={100} />
+          </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {CORE_SYSTEMS.map((system, i) => (
             <motion.a
               key={i}
               href={system.url}
-              target="_blank"
-              whileHover={{ x: 10 }}
-              className="group flex items-center gap-8 p-10 glass-card rounded-[50px] border-l-4"
-              style={{ borderLeftColor: system.color }}
+              target={system.url.startsWith('http') ? "_blank" : "_self"}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6 + (i * 0.1) }}
+              className="group flex flex-col gap-8 p-12 glass-card rounded-[60px] border-white/5 hover:border-white/10 active:scale-[0.98]"
             >
-              <div className="p-6 bg-zinc-900 rounded-3xl group-hover:bg-white/10 transition-colors" style={{ color: system.color }}>
-                <system.icon size={40} />
+              <div
+                className="p-6 bg-white/5 rounded-3xl w-fit group-hover:bg-white/10 transition-all group-hover:rotate-6 shadow-xl"
+                style={{ color: system.color, boxShadow: `0 10px 30px ${system.color}15` }}
+              >
+                <system.icon size={44} />
               </div>
-              <div className="flex-1">
-                <h3 className="text-3xl font-black italic uppercase tracking-tight mb-2">{system.name}</h3>
-                <p className="opacity-50 text-sm">{system.desc}</p>
+              <div>
+                <h3 className="text-3xl font-black italic uppercase tracking-tight mb-3 text-white">{system.name}</h3>
+                <p className="opacity-40 text-xs font-medium leading-relaxed group-hover:opacity-70 transition-opacity">{system.desc}</p>
               </div>
-              <ChevronRight className="opacity-20 group-hover:opacity-100 group-hover:translate-x-2 transition-all" size={32} />
+              <div className="flex justify-between items-center mt-4">
+                <span className="text-[9px] font-black uppercase tracking-[0.3em] opacity-20 group-hover:opacity-100 transition-opacity">Connect_Now</span>
+                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+                  <ChevronRight size={20} />
+                </div>
+              </div>
             </motion.a>
           ))}
         </div>
       </section>
 
-      <footer className="mt-40 mb-20 text-center opacity-20">
-        <p className="text-[10px] font-black uppercase tracking-[1em]">GhostMicro Infrastructure // 2026</p>
+      <footer className="mt-48 mb-20 text-center relative z-10 w-full">
+        <div className="w-20 h-px bg-white/10 mx-auto mb-10" />
+        <p className="text-[9px] font-bold uppercase tracking-[1.5em] text-white/10">GhostMicro Infrastructure // Distributed intelligence layer</p>
       </footer>
     </main>
   );
