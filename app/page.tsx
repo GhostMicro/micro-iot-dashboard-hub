@@ -1,13 +1,14 @@
 'use client';
 
 import * as React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Shield, Zap, Activity, Database,
   Cpu, Boxes, ChevronRight, Brain,
   Sparkles, Bot, Microscope, Radio,
   Ghost
 } from 'lucide-react';
+import Link from 'next/link';
 
 const THEMES = [
   { id: 1, name: 'Tactical HUD', port: 3000, color: '#00f2ff', icon: Shield, desc: 'Combat Interface' },
@@ -21,35 +22,47 @@ const THEMES = [
 ];
 
 const CORE_SYSTEMS = [
-  { name: 'Neural Brain', url: 'http://localhost:8000', icon: Bot, color: '#bc13fe', desc: 'AI Core' },
-  { name: 'Neuro Lab', url: '/neuro-lab', icon: Brain, color: '#00f2ff', desc: 'Personality Config' },
+  { name: 'Genesis Core', url: 'http://localhost:8000', icon: Bot, color: '#bc13fe', desc: 'Neural Intelligence (AI)' },
+  { name: 'Neuro Lab', url: '/neuro-lab', icon: Brain, color: '#00f2ff', desc: 'Intelligence Configuration' },
   { name: 'Library Hub', url: 'http://localhost:3010', icon: Boxes, color: '#ffffff', desc: 'Assets & Plugins' },
 ];
 
 export default function Home() {
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
   return (
-    <main className="min-h-screen bg-[#020202] text-white p-6 md:p-12 lg:p-20 font-sans selection:bg-cyan-500/30">
+    <main className="min-h-screen bg-[#020202] text-white p-6 md:p-12 lg:p-20 font-sans selection:bg-cyan-500/30 overflow-x-hidden relative">
       <div className="hub-bg" />
       <div className="hub-grid" />
       <div className="scanline" />
 
-      {/* --- Optimized Header --- */}
+      {/* Optimized Header */}
       <header className="max-w-7xl mx-auto mb-20 relative z-10">
         <div className="flex items-center gap-3 mb-8 opacity-60">
           <Ghost size={20} className="text-cyan-400" />
-          <span className="text-[10px] font-black uppercase tracking-[0.5em]">System_Authorized</span>
+          <span className="text-[10px] font-black uppercase tracking-[0.5em]">System_Genesis_Authorized</span>
         </div>
 
         <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter uppercase leading-none mb-4">
           Ghost<span className="animated-gradient-text">_Hub</span>
         </h1>
         <p className="text-xs md:text-sm font-medium opacity-40 uppercase tracking-[0.3em] max-w-xl">
-          Unified command interface for distributed neural nodes and autonomous hardware.
+          Central management for Genesis Neural Core and distributed automation nodes.
         </p>
       </header>
 
-      {/* --- Grid Layout (Fixed) --- */}
-      <section className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-32 relative z-10">
+      {/* Grid Layout - Forced Grid with Style Object to prevent Tailwind bypass */}
+      <div
+        className="max-w-7xl mx-auto mb-32 relative z-10"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+          gap: '24px'
+        }}
+      >
         {THEMES.map((theme, i) => (
           <motion.a
             key={theme.id}
@@ -75,8 +88,8 @@ export default function Home() {
               </div>
 
               <div>
-                <div className="text-[8px] font-bold text-white/30 uppercase tracking-widest mb-1">ID_0{theme.id}</div>
-                <h3 className="text-2xl font-black italic uppercase tracking-tighter mb-2 group-hover:text-cyan-400 transition-colors">
+                <div className="text-[8px] font-bold text-white/30 uppercase tracking-widest mb-1">NODE_0{theme.id}</div>
+                <h3 className="text-2xl font-black italic uppercase tracking-tighter mb-2 group-hover:text-white transition-colors">
                   {theme.name}
                 </h3>
                 <p className="text-[10px] text-white/40 leading-relaxed uppercase tracking-tighter group-hover:text-white/60 transition-colors">
@@ -93,41 +106,63 @@ export default function Home() {
             </div>
           </motion.a>
         ))}
-      </section>
+      </div>
 
-      {/* --- Systems Backbone --- */}
-      <section className="max-w-7xl mx-auto pt-20 border-t border-white/5 relative z-10">
+      {/* Systems Backbone */}
+      <div className="max-w-7xl mx-auto pt-20 border-t border-white/5 relative z-10">
         <div className="flex items-center gap-4 mb-12">
           <div className="w-1 h-6 bg-cyan-400" />
-          <h2 className="text-3xl font-black italic uppercase tracking-tighter">Core_Backbone</h2>
+          <h2 className="text-3xl font-black italic uppercase tracking-tighter">Core_Command</h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {CORE_SYSTEMS.map((system, i) => (
-            <motion.a
-              key={i}
-              href={system.url}
-              target={system.url.startsWith('http') ? "_blank" : "_self"}
-              whileHover={{ y: -5 }}
-              className="group glass-card p-10 rounded-[40px] flex items-center gap-8 border border-white/5 hover:border-cyan-500/20"
-            >
-              <div
-                className="p-5 bg-white/5 rounded-2xl transition-all group-hover:scale-110"
-                style={{ color: system.color }}
+        <div
+          className="grid gap-6"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))'
+          }}
+        >
+          {CORE_SYSTEMS.map((system, i) => {
+            const isExternal = system.url.startsWith('http');
+            const Content = (
+              <div className="flex items-center gap-8 w-full h-full">
+                <div
+                  className="p-5 bg-white/5 rounded-2xl transition-all group-hover:scale-110"
+                  style={{ color: system.color }}
+                >
+                  <system.icon size={36} />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-black italic uppercase tracking-tighter mb-1">{system.name}</h3>
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-white/20 group-hover:text-white/40">{system.desc}</p>
+                </div>
+              </div>
+            );
+
+            return isExternal ? (
+              <a
+                key={i}
+                href={system.url}
+                target="_blank"
+                className="group glass-card p-10 rounded-[40px] flex border border-white/5 hover:border-cyan-500/20 transition-all"
               >
-                <system.icon size={36} />
-              </div>
-              <div>
-                <h3 className="text-2xl font-black italic uppercase tracking-tighter mb-1">{system.name}</h3>
-                <p className="text-[9px] font-bold uppercase tracking-widest text-white/20 group-hover:text-white/40">{system.desc}</p>
-              </div>
-            </motion.a>
-          ))}
+                {Content}
+              </a>
+            ) : (
+              <Link
+                key={i}
+                href={system.url}
+                className="group glass-card p-10 rounded-[40px] flex border border-white/5 hover:border-cyan-500/20 transition-all"
+              >
+                {Content}
+              </Link>
+            )
+          })}
         </div>
-      </section>
+      </div>
 
       <footer className="max-w-7xl mx-auto mt-40 mb-10 text-center opacity-10">
-        <p className="text-[8px] font-black uppercase tracking-[1em]">GhostMicro Infrastructure // 2026</p>
+        <p className="text-[8px] font-black uppercase tracking-[1em]">GhostMicro Infrastructure // Genesis Core</p>
       </footer>
     </main>
   );

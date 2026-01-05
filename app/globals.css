@@ -1,19 +1,16 @@
+@import "tailwindcss";
+
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --background: #020202;
-  --foreground: #ffffff;
-  --accent-cyan: #00f2ff;
-  --accent-purple: #bc13fe;
+@theme {
+  --color-background: #020202;
+  --color-accent-cyan: #00f2ff;
+  --color-accent-purple: #bc13fe;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: #020202;
+  color: #ffffff;
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
 }
@@ -47,7 +44,7 @@ body {
 
 .glass-card:hover {
   background: rgba(255, 255, 255, 0.05);
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-8px);
 }
 
 .font-orbitron {
@@ -90,7 +87,6 @@ body {
   opacity: 0.15;
 }
 
-/* Custom scrollbar for better aesthetic */
 ::-webkit-scrollbar {
   width: 4px;
 }
