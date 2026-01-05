@@ -23,6 +23,7 @@ const THEMES = [
 
 const CORE_SYSTEMS = [
   { name: 'Neural Brain', url: 'http://localhost:8000', icon: Bot, color: '#bc13fe', desc: 'AI Cognitive Core' },
+  { name: 'Neuro Lab', url: '/neuro-lab', icon: Brain, color: '#00f2ff', desc: 'Intelligence Configuration & Memories' },
   { name: 'Library Hub', url: 'http://localhost:3010', icon: Boxes, color: '#ffffff', desc: 'Component & Plugin Registry' },
 ];
 
